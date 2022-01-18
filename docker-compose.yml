@@ -10,6 +10,9 @@ services:
         source: ${HOME:?}/.config
         target: /home/coder/.config
       - type: bind
+        source: ${HOME:?}/.local/share/code-server
+        target: /home/coder/.local/share/code-server
+      - type: bind
         source: ${WORKSPACE:?}
         target: /home/coder/workspace
     ports:
