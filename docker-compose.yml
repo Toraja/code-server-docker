@@ -7,8 +7,8 @@ services:
       - DOCKER_USER=${USER:?}
     volumes:
       - type: bind
-        source: ${HOME:?}/.config
-        target: /home/coder/.config
+        source: ${HOME:?}/.config/code-server
+        target: /home/coder/.config/code-server
       - type: bind
         source: ${HOME:?}/.local/share/code-server
         target: /home/coder/.local/share/code-server
