@@ -1,6 +1,6 @@
 services:
   code:
-    image: codercom/code-server:latest
+    build: .
     user: ${UID:?}:${GID:?}
     environment:
       - DOCKER_USER=${USER:?}
