@@ -5,3 +5,4 @@ view-pass:
 .PHONY: renew-image
 renew-image:
 	@docker pull codercom/code-server:latest
+	@docker compose build
