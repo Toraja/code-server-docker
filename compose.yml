@@ -17,3 +17,4 @@ services:
     ports:
       - target: 8080
         published: ${PORT:?}
+    restart: unless-stopped
