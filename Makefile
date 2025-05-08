@@ -6,4 +6,4 @@ view-pass:
 
 .PHONY: build-image
 build-image:
-	@docker compose build --pull --build-arg TAG=${TAG}
+	@COMPOSE_BAKE=true docker compose build --pull --build-arg TAG=${TAG}
