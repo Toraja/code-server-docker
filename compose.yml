@@ -3,8 +3,12 @@ services:
     build: .
     user: ${UID:?}:${GID:?}
     environment:
+      # Specify the user for the code-server process
+      # https://coder.com/docs/code-server/install#docker
       - DOCKER_USER=${USER:?}
     volumes:
+      # When DOCKER_USER is set, code-server will use the specified user
+      # but the user's home directory will still be /home/coder.
       - type: bind
         source: ${HOME:?}/.config/code-server
         target: /home/coder/.config/code-server
