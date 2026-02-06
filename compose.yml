@@ -1,24 +1,33 @@
 services:
+  # https://coder.com/docs/code-server/install#docker
   code:
-    build: .
+    build:
+      context: .
+      args:
+        TAG: ${TAG:-latest}
+        UID: ${UID:?}
+        GID: ${GID:?}
+        COPILOT_CHAT_VERSION: ${COPILOT_CHAT_VERSION:-latest}
+    # Setting the user to match host user to avoid permission issues on bind-mounted volumes.
+    # This changes the user ID and group ID of the 'coder' user inside the container.
     user: ${UID:?}:${GID:?}
-    environment:
-      # Specify the user for the code-server process
-      # https://coder.com/docs/code-server/install#docker
-      - DOCKER_USER=${USER:?}
+    # environment:
+      # This changes the user name of the default user from 'coder' to your host username.
+      # This is optional the permissions issue is already solved by setting the UID and GID above.
+      # DOCKER_USER: ${USER:?}
+    command: "--disable-workspace-trust"
     volumes:
-      # When DOCKER_USER is set, code-server will use the specified user
-      # but the user's home directory will still be /home/coder.
-      - type: bind
-        source: ${HOME:?}/.config/code-server
-        target: /home/coder/.config/code-server
-      - type: bind
-        source: ${HOME:?}/.local/share/code-server
-        target: /home/coder/.local/share/code-server
       - type: bind
         source: ${WORKSPACE:?}
         target: /home/coder/workspace
+      - type: volume
+        source: local_share_code_server
+        target: /home/coder/.local/share/code-server
     ports:
       - target: 8080
         published: ${PORT:?}
     restart: unless-stopped
+volumes:
+  local_share_code_server:
+    labels:
+      prune: false
