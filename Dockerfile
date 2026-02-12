@@ -1,9 +1,6 @@
 ARG TAG=latest
 FROM codercom/code-server:${TAG}
 
-ARG UID=1000
-ARG GID=1000
-
 USER root
 RUN apt-get update && apt-get upgrade --no-install-recommends --yes && apt-get install --no-install-recommends --yes \
     default-jre graphviz
@@ -21,6 +18,9 @@ RUN curl --fail --silent --show-error --location \
     code-server --install-extension MermaidChart.vscode-mermaid-chart && \
     code-server --install-extension jebbs.plantuml && \
     rm copilot-chat.vsix
+
+ARG UID=1000
+ARG GID=1000
 
 # The directory is created when code-server command runs above, so ownership needs to be changed after that
 RUN sudo chown --recursive ${UID}:${GID} /home/coder/.local/share/code-server
