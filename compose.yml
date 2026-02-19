@@ -2,7 +2,7 @@ services:
   # https://coder.com/docs/code-server/install#docker
   code:
     build:
-      context: .
+      context: ctx/
       args:
         TAG: ${TAG:-latest}
         UID: ${UID:?}
