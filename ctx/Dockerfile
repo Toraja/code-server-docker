@@ -8,6 +8,8 @@ RUN apt-get update && apt-get upgrade --no-install-recommends --yes && apt-get i
 # Must be 1000 or fails to install extensions due to permission issues
 USER 1000
 
+COPY --chown=1000:1000 ./home ./
+
 ARG COPILOT_CHAT_VERSION=latest
 RUN curl --fail --silent --show-error --location \
     "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot-chat/${COPILOT_CHAT_VERSION}/vspackage" | \
